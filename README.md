@@ -14,6 +14,8 @@
 
 It is especially useful for building **data pipelines**, **ETL flows**, and **intermediate result debugging**.
 
+Except composable pattern it also provides useful operations like suffixed joins or customized window functions
+
 ---
 
 ## 📦 Features

@@ -59,11 +59,7 @@ class JoinCondition:
     left_col: str
     right_col: Optional[str] = None
     sign: (
-        Literal["=="]
-        | Literal[">"]
-        | Literal["<"]
-        | Literal["<="]
-        | Literal[">="]
+        Literal["=="] | Literal[">"] | Literal["<"] | Literal["<="] | Literal[">="]
     ) = "=="
 
     def __post_init__(self):

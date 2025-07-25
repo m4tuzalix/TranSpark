@@ -6,7 +6,7 @@ def transformation(
     *,
     order: int = 0,
     cache: bool = False,
-    cache_plan: bool = False
+    cache_plan: bool = False,
 ):
     """
     A decorator for marking methods as transformation steps in a pipeline.
@@ -23,6 +23,7 @@ def transformation(
     Returns:
         Callable: The decorated function with transformation metadata attached.
     """
+
     def decorator(func: Callable) -> Callable:
         setattr(func, "_is_transformation", True)
         setattr(func, "_order", order)

@@ -59,7 +59,7 @@ class ComposableDFModel:
         _transformations = [
             obj
             for _, obj in sorted(
-                enumerate(self.transformations),
+                enumerate(self.transformations, start=1),
                 key=lambda obj: (obj[1].order or obj[0]),
             )
         ]
