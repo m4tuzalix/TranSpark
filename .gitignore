@@ -1,0 +1,4 @@
+.venv
+.pytest*
+dist
+transpark.egg-info/*
