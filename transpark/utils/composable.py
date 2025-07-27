@@ -34,17 +34,6 @@ def compose(*functions: Transformation[T]) -> Composable[T]:
 
     def apply(data: T, function: Transformation[T]) -> T:
         result: T = function.method(data)
-        if isinstance(result, DataFrame):
-            if validation_model := function.output_validation:
-                try:
-                    validation_model.validate(result)
-                except ValueError as e:
-                    if not function.continue_on_failed_validation:
-                        raise ValueError(
-                            f"{function.method.__self__.__class__}::{function.method.__name__}: {str(e)}"
-                        )
-            if function.cache:
-                result.cache()
-        return result
+        return function.process(result)
 
     return lambda data: reduce(apply, functions, data)

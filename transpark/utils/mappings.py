@@ -7,10 +7,12 @@ from typing import (
     TypeVar,
     Protocol,
     Generic,
+    Any,
+    overload,
 )
 from contextlib import AbstractContextManager
 from transpark.models.expected_output_model import ExpectedOutput
-from pyspark.sql.types import StructType
+from pyspark.sql import DataFrame
 
 T = TypeVar("T")
 T2_CO = TypeVar("T2_CO", covariant=True)
@@ -47,6 +49,33 @@ class Transformation(Generic[T]):
     cache_plan: bool = False
     output_validation: Optional[ExpectedOutput] = None
     continue_on_failed_validation: bool = False
+
+    def _process_df(self, method_result: DataFrame) -> DataFrame:
+        if self.output_validation:
+            try:
+                self.output_validation.validate(method_result)
+            except ValueError as e:
+                if not self.continue_on_failed_validation:
+                    raise ValueError(
+                        f"{self.method.__self__.__class__}::{self.method.__name__}: {str(e)}"
+                    )
+        if self.cache:
+            method_result.cache()
+        return method_result
+
+    @overload
+    def process(self, method_result: DataFrame) -> DataFrame: ...
+
+    @overload
+    def process(self, method_result: dict) -> dict: ...
+    
+    @overload
+    def process(self, method_result: str) -> str: ...
+
+    def process(self, method_result: Any) -> Any:
+        if isinstance(method_result, DataFrame):
+            return self._process_df(method_result=method_result)
+        return method_result
 
 
 @dataclass
