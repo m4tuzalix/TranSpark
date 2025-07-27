@@ -2,11 +2,8 @@ from tests import InternalTestCase
 from pyspark.sql import DataFrame
 from unittest import mock
 from transpark.models import ComposableDFModel, CachableDFModel, TransparkMixin
-from transpark.utils.mappings import Transformation
+from transpark.utils.transformation import Transformation
 from transpark.utils.decorators import transformation
-import pytest
-from transpark.models.expected_output_model import ExpectedOutputDF
-from pyspark.sql.types import StructField, StructType, StringType
 
 
 class ComposableTestCase(InternalTestCase):

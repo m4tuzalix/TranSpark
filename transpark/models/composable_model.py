@@ -1,5 +1,5 @@
 from transpark.utils.composable import compose
-from transpark.utils.mappings import Transformation
+from transpark.utils.transformation import Transformation
 from pyspark.sql import DataFrame
 
 

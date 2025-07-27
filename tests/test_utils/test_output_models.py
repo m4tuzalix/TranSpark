@@ -36,7 +36,9 @@ class OutputModelsTestCase(InternalTestCase):
             )
         ).validate(mock_df)
 
-    def test__baseoutputmodel_validation__failed__missing_field__works_fine(self):
+    def test__baseoutputmodel_validation__failed__missing_field__works_fine(
+        self,
+    ):  # noqa
 
         schema = StructType(
             [
@@ -60,7 +62,9 @@ class OutputModelsTestCase(InternalTestCase):
 
         assert "Missing fields: {('salary', DoubleType())}" in str(e.value)
 
-    def test__baseoutputmodel_validation__failed__field_type_mismatch__works_fine(self):
+    def test__baseoutputmodel_validation__failed__field_type_mismatch__works_fine(  # noqa
+        self,
+    ):
 
         schema = StructType(
             [
@@ -84,6 +88,6 @@ class OutputModelsTestCase(InternalTestCase):
             ).validate(mock_df)
 
         assert (
-            "Missing fields: {('salary', DoubleType())}; Unexpected fields: {('salary', IntegerType())}"
+            "Missing fields: {('salary', DoubleType())}; Unexpected fields: {('salary', IntegerType())}"  # noqa
             in str(e.value)
         )

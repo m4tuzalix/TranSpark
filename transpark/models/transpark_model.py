@@ -1,9 +1,6 @@
-from transpark.utils.mappings import (
-    Transformation,
-    CacheClass,
-    TransformationClass,
-)  # noqa
 from typing import Self, ClassVar
+from transpark.utils.interfaces import CacheClass, TransformationClass
+from transpark.utils.transformation import Transformation
 
 
 class TransparkMeta(type):

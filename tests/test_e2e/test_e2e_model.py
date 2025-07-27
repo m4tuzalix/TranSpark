@@ -228,9 +228,9 @@ class TestE2EModel(InternalE2ETestCase):
             ),
         ]
 
-    def test__e2e_model__cache__context_manager__cache_cleared__model_validation__works_fine(
+    def test__e2e_model__cache__context_manager__cache_cleared__model_validation__works_fine(  # noqa
         self,
-    ):  # noqa
+    ):
         class Dummy(TransparkMixin):
             cache = CachableDFModel
             transformator = ComposableDFModel
@@ -300,9 +300,9 @@ class TestE2EModel(InternalE2ETestCase):
             ),
         ]
 
-    def test__e2e_model__cache__context_manager__cache_cleared__model_validation_failed__works_fine(
+    def test__e2e_model__cache__context_manager__cache_cleared__model_validation_failed__works_fine(  # noqa
         self,
-    ):  # noqa
+    ):
         class Dummy(TransparkMixin):
             cache = CachableDFModel
             transformator = ComposableDFModel
@@ -358,7 +358,7 @@ class TestE2EModel(InternalE2ETestCase):
             dummy.transformator.transform(input_df)
 
         assert (
-            "Missing fields: {('dummy4', StringType())}; Unexpected fields: {('dummy3', StringType())}"
+            "Missing fields: {('dummy4', StringType())}; Unexpected fields: {('dummy3', StringType())}"  # noqa
             in str(e.value)
         )
         assert not dummy.cache.DFS_STORAGE

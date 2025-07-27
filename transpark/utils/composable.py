@@ -1,6 +1,6 @@
 from functools import reduce
 from pyspark.sql import DataFrame
-from transpark.utils.mappings import Transformation, Composable, T
+from transpark.utils.transformation import Transformation, Composable, T
 from typing import overload
 
 

@@ -2,7 +2,7 @@ from tests import InternalTestCase
 from pyspark.sql import DataFrame
 from unittest import mock
 from transpark.utils.composable import compose
-from transpark.utils.mappings import Transformation
+from transpark.utils.transformation import Transformation
 
 
 class ComposableTestCase(InternalTestCase):
