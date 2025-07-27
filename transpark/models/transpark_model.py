@@ -34,6 +34,7 @@ class TransparkMeta(type):
                 _order = getattr(method, "_order", None)
                 _cache = getattr(method, "_cache", False)
                 _cache_plan = getattr(method, "_cache_plan", False)
+                _expected_output = getattr(method, "_expected_output", None)
 
                 if any([_cache, _cache_plan]):
                     method = instance.cache._wrap_with_cache(method)
@@ -45,6 +46,7 @@ class TransparkMeta(type):
                         order=_order,
                         cache=_cache,
                         cache_plan=_cache_plan,
+                        output_validation=_expected_output,
                     )
                 )
         return instance

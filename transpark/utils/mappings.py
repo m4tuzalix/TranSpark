@@ -3,13 +3,14 @@ from dataclasses import dataclass
 from typing import (
     Literal,
     Optional,
-    NamedTuple,
     Callable,
     TypeVar,
     Protocol,
     Generic,
 )
 from contextlib import AbstractContextManager
+from transpark.models.expected_output_model import ExpectedOutput
+from pyspark.sql.types import StructType
 
 T = TypeVar("T")
 T2_CO = TypeVar("T2_CO", covariant=True)
@@ -28,7 +29,8 @@ class SupportedJoin(StrEnum):
     LEFT_ANTI = auto()
 
 
-class Transformation(NamedTuple, Generic[T]):
+@dataclass(frozen=True, slots=True)
+class Transformation(Generic[T]):
     """
     A transformation step in a composable pipeline.
 
@@ -43,6 +45,8 @@ class Transformation(NamedTuple, Generic[T]):
     order: int
     cache: bool = False
     cache_plan: bool = False
+    output_validation: Optional[ExpectedOutput] = None
+    continue_on_failed_validation: bool = False
 
 
 @dataclass

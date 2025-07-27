@@ -1,4 +1,5 @@
 from typing import Callable, Optional
+from transpark.models.expected_output_model import ExpectedOutput
 
 
 def transformation(
@@ -7,6 +8,7 @@ def transformation(
     order: int = 0,
     cache: bool = False,
     cache_plan: bool = False,
+    expected_output: Optional[ExpectedOutput] = None,
 ):
     """
     A decorator for marking methods as transformation steps in a pipeline.
@@ -29,6 +31,7 @@ def transformation(
         setattr(func, "_order", order)
         setattr(func, "_cache", cache)
         setattr(func, "_cache_plan", cache_plan)
+        setattr(func, "_expected_output", expected_output)
         return func
 
     if _func is None:
