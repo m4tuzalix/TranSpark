@@ -2,6 +2,7 @@ from typing import Iterator
 from pyspark.sql import DataFrame
 from functools import wraps
 from contextlib import contextmanager
+from transpark.utils.mappings import Composable
 
 
 class CachableDFModel:
@@ -10,7 +11,7 @@ class CachableDFModel:
 
     Stores DataFrames by method name, allows single-use access via a context manager,
     and supports unpersisting cached data to manage memory.
-    """
+    """  # noqa
 
     __slots__ = ("DFS_STORAGE",)
 
@@ -47,7 +48,7 @@ class CachableDFModel:
 
         Yields:
             Optional[DataFrame]: The cached DataFrame, or None if not available.
-        """
+        """  # noqa
         if self.__avaiable(name=name):
             df = self.DFS_STORAGE.pop(name)
             try:
@@ -68,7 +69,7 @@ class CachableDFModel:
                     df.unpersist()
             self.DFS_STORAGE.clear()
 
-    def _wrap_with_cache(self, func):
+    def _wrap_with_cache(self, func) -> Composable[DataFrame]:
         """
         Wrap a method to enable automatic caching of its DataFrame result.
 
@@ -77,10 +78,10 @@ class CachableDFModel:
 
         Returns:
             Callable: A wrapped version of the method that stores its result in the cache.
-        """
+        """  # noqa
 
         @wraps(func)
-        def cache_wrapper(df: DataFrame):
+        def cache_wrapper(df: DataFrame) -> DataFrame:
             cache_key = func.__name__
             result_df = func(df)
             self.DFS_STORAGE[cache_key] = result_df

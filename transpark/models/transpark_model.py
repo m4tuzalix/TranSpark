@@ -1,4 +1,8 @@
-from transpark.utils.mappings import Transformation, CacheClass, TransformationClass
+from transpark.utils.mappings import (
+    Transformation,
+    CacheClass,
+    TransformationClass,
+)  # noqa
 from typing import Self, ClassVar
 
 
@@ -11,7 +15,7 @@ class TransparkMeta(type):
     - Scans for methods decorated with `@transformation`.
     - Automatically wraps cacheable methods.
     - Registers transformations in execution order.
-    """
+    """  # noqa
 
     def __call__(cls, *args, **kwargs):
         """
@@ -23,7 +27,7 @@ class TransparkMeta(type):
 
         Returns:
             An initialized instance with transformation metadata registered.
-        """
+        """  # noqa
         instance = super().__call__(*args, **kwargs)
         setattr(instance, "cache", cls.cache())
         setattr(instance, "transformator", cls.transformator())
@@ -38,7 +42,7 @@ class TransparkMeta(type):
 
                 if any([_cache, _cache_plan]):
                     method = instance.cache._wrap_with_cache(method)
-                    setattr(instance, attr_name, method)  # rebind the wrapped method
+                    setattr(instance, attr_name, method)
 
                 instance.transformator.add_transformation(
                     Transformation(
@@ -59,7 +63,7 @@ class TransparkMixin(metaclass=TransparkMeta):
     This class:
     - Declares `cache` and `transformator` class attributes, to be set as types.
     - Enables context-managed usage to auto-clear cache on exit.
-    """
+    """  # noqa
 
     cache: ClassVar[type[CacheClass]]
     transformator: ClassVar[type[TransformationClass]]
@@ -76,5 +80,5 @@ class TransparkMixin(metaclass=TransparkMeta):
     def __exit__(self, *args, **kwargs):
         """
         Exit the context manager, automatically clearing any cached DataFrames.
-        """
+        """  # noqa
         self.cache.clear_cache()

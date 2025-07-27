@@ -30,7 +30,7 @@ def compose(*functions: Transformation[T]) -> Composable[T]:
     Returns:
         Composable[T]: A single callable object that applies all transformations
         in sequence to input of type `T`.
-    """
+    """  # noqa
 
     def apply(data: T, function: Transformation[T]) -> T:
         result: T = function.method(data)

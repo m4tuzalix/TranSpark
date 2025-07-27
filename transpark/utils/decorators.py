@@ -24,7 +24,7 @@ def transformation(
 
     Returns:
         Callable: The decorated function with transformation metadata attached.
-    """
+    """  # noqa
 
     def decorator(func: Callable) -> Callable:
         setattr(func, "_is_transformation", True)

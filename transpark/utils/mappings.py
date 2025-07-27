@@ -41,9 +41,9 @@ class Transformation(Generic[T]):
         order (int): Execution order in the transformation pipeline.
         cache (bool): Whether to cache the output of this transformation.
         cache_plan (bool): Whether to include this step in the cache planning process.
-    """
+    """  # noqa
 
-    method: Composable[T]
+    method: Composable
     order: int
     cache: bool = False
     cache_plan: bool = False
@@ -57,7 +57,7 @@ class Transformation(Generic[T]):
             except ValueError as e:
                 if not self.continue_on_failed_validation:
                     raise ValueError(
-                        f"{self.method.__self__.__class__}::{self.method.__name__}: {str(e)}"
+                        f"{self.method.__self__.__class__}::{self.method.__name__}: {str(e)}"  # noqa
                     )
         if self.cache:
             method_result.cache()
@@ -68,7 +68,7 @@ class Transformation(Generic[T]):
 
     @overload
     def process(self, method_result: dict) -> dict: ...
-    
+
     @overload
     def process(self, method_result: str) -> str: ...
 
@@ -87,12 +87,16 @@ class JoinCondition:
         left_col (str): The column name from the left DataFrame.
         right_col (Optional[str]): The column name from the right DataFrame. Defaults to `left_col`.
         sign (Literal): The comparison operator (e.g., '==', '>', '<=', etc.).
-    """
+    """  # noqa
 
     left_col: str
     right_col: Optional[str] = None
     sign: (
-        Literal["=="] | Literal[">"] | Literal["<"] | Literal["<="] | Literal[">="]
+        Literal["=="]
+        | Literal[">"]
+        | Literal["<"]
+        | Literal["<="]
+        | Literal[">="]  # noqa
     ) = "=="
 
     def __post_init__(self):
@@ -124,7 +128,7 @@ class TransformationClass(Protocol[T]):
 class CacheClass(Protocol[T2_CO]):
     """
     Protocol defining the interface for cache-handling classes.
-    """
+    """  # noqa
 
     def fetch_once(self, name: str) -> AbstractContextManager[T2_CO | None]:
         """
@@ -135,11 +139,15 @@ class CacheClass(Protocol[T2_CO]):
 
         Returns:
             Context manager yielding the cached object or None.
-        """
+        """  # noqa
         ...
 
     def clear_cache(self) -> None:
         """
         Clear all cached items and unpersist any Spark DataFrames.
         """
+        ...
+
+    def _wrap_with_cache(self) -> Composable:
+        """Start caching logic."""
         ...

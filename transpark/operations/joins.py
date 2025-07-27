@@ -39,7 +39,9 @@ def __join_base(
     """
     match cond:
         case JoinCondition() as c:
-            _cond = [f"{alias_left}{c.left_col} {c.sign} {alias_right}{c.right_col}"]
+            _cond = [
+                f"{alias_left}{c.left_col} {c.sign} {alias_right}{c.right_col}"
+            ]  # noqa
 
         case list() as cc if all(isinstance(c, JoinCondition) for c in cond):
             _cond = [
@@ -48,7 +50,7 @@ def __join_base(
             ]
 
         case list() as cc if all(isinstance(c, str) for c in cond):
-            _cond = [f"{alias_left}.{col} == {alias_right}.{col}" for col in cc]
+            _cond = [f"{alias_left}.{col} == {alias_right}.{col}" for col in cc]  # noqa
 
         case _:
             raise ValueError("Unsupported join condition type")

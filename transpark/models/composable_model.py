@@ -8,7 +8,7 @@ class ComposableDFModel:
     A model for composing and executing a sequence of DataFrame transformations.
 
     Uses `Transformation` objects to build a deterministic and reusable pipeline.
-    """
+    """  # noqa
 
     __slots__ = ("_transformations",)
 
@@ -27,7 +27,7 @@ class ComposableDFModel:
 
         Returns:
             list[Transformation[DataFrame]]: The ordered list of transformations.
-        """
+        """  # noqa
         return self._transformations
 
     def add_transformation(self, transformation: Transformation[DataFrame]):
@@ -36,7 +36,7 @@ class ComposableDFModel:
 
         Args:
             transformation (Transformation[DataFrame]): A transformation object to add.
-        """
+        """  # noqa
         if (
             isinstance(transformation, Transformation)
             and transformation not in self._transformations
@@ -55,7 +55,7 @@ class ComposableDFModel:
 
         Returns:
             DataFrame: The resulting DataFrame after all transformations have been applied.
-        """
+        """  # noqa
         _transformations = [
             obj
             for _, obj in sorted(
